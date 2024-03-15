@@ -16,7 +16,7 @@ int main(void){
                                        ,{'4','.','.','8','.','3','.','.','1'}
                                        ,{'7','.','.','.','2','.','.','.','6'}
                                        ,{'.','6','.','.','.','.','2','8','.'}
-                                       ,{'6','.','.','4','1','9','.','.','5'}
+                                       ,{'2','.','.','4','1','9','.','.','5'}
                                        ,{'.','.','.','.','8','.','.','7','9'}};
 				
   if(is_valid(board) == 1){
@@ -57,6 +57,25 @@ int is_valid(char board[ROW_LENGTH][COL_LENGTH]){
       }
     }
     memset(checked, 0, sizeof(checked));
+  }
+
+  //Check 3x3 cells
+  for(int cell_row = 0; cell_row < ROW_LENGTH; cell_row += 3){ //Iterator for every cell's rows
+    for(int cell_column = 0; cell_column < COL_LENGTH; cell_column += 3){ //Iterator for every cell's columns
+      for(int i = 0; i < 3; i++){ //For every cell, check 3 columns
+	for(int j = 0; j < 3; j++){ //For every cell, check 3 rows
+	  if(board[cell_row + i][cell_column + j] > '0' && board[cell_row + i][cell_column + j] <= '9'){
+	    if(checked[board[cell_row + i][cell_column + j] - '1'] == true){
+	      return 0;
+	    }else{
+	      checked[board[cell_row + i][cell_column + j] - '1'] = true;
+	    }
+	  }
+	}	
+      }
+      memset(checked, 0, sizeof(checked));
+    }
+    
   }
   
   return rval;
